@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.js'></script>
+    <script src="./data.js"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" type="text/css" href="style1.css"/>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:80%; }
+        sidebar { position:fixed; left:80%; padding: 1%; text-align:left; }
+    </style>
+</head>
+<body>
+
+<div id='map'>
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYW5keW5ndXllbjk1IiwiYSI6ImNqNmxxN2lyMTF2YmIyd3BtOXJwM3Y0bDgifQ.0cSfRUufu4N-uJ3CxWhBsw';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/andynguyen95/cj7fv6apm35io2rom87w9ctt7',
+    center: [150.97,-34.0],
+    zoom: 10,
+    pitch: 30,
+    bearing: 320
+});
+
+map.on('load', function() {
+
+    map.addLayer({ 
+        'id': 'room-extrusion',
+        'type': 'fill-extrusion',
+        'source': {
+            // Geojson Data source used in vector tiles, documented at
+            // https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
+            'type': 'geojson',
+            'data':  data
+        },
+        'paint': {
+            // See the Mapbox Style Spec for details on property functions
+            // https://www.mapbox.com/mapbox-gl-style-spec/#types-function
+            'fill-extrusion-color': {
+                // Get the fill-extrusion-color from the source 'color' property.
+                'property': 'chan60100',
+                "stops": [
+                    [-0.75, '#575c63'],
+                    [-0.2, '#999999'],
+                    [0, 'white'],
+                    [0.4, '#d8903e'],
+                    [5.2, '#e50909']
+                    ]
+            },
+            'fill-extrusion-height': {
+                // Get fill-extrusion-height from the source 'height' property.
+                'property': 'prop60100',
+                "stops": [
+                    [0, 0],
+                    [0.1, 100],
+                    [0.27, 1500],
+                    [0.46, 4000]
+                    ]
+                
+            },
+            'fill-extrusion-base': {
+                // Get fill-extrusion-base from the source 'base_height' property.
+                'property': 'base_height',
+                'type': 'identity'
+            },
+            // Make extrusions slightly opaque for see through indoor walls.
+            'fill-extrusion-opacity': 0.9
+        }
+    });
+});
+</script>
+
+<sidebar>
+    <h2>Age 60+</h2>
+    <p>The final age group of 60+ retirees share a similar story to the previous age group.
+    <br><br>Most retirees live in the Central Coast, the Shire, and the outer south west regions. Accordingly, few live in the inner city and western suburbs.
+    <br><br>Most growth can be seen in the outer western suburbs. This time, The Ponds has shown the most growth, with retirees increasing by 520% in that area. Douglas Park south of Campbelltown comes in at second place.
+    <br><br>On the other hand, retirees are being displaced from Badgery's Creek due to the airport development.
+    </p><br><a href="Map4060p1.html" class="button">Prev</a>
+    <a href="Info.html" class="button">Next</a>
+</sidebar>
+
+</body>
+</html>

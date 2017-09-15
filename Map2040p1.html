@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.js'></script>
+    <script src="./data.js"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" type="text/css" href="style1.css"/>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:80%; }
+        sidebar { position:fixed; left:80%; padding: 1%; text-align:left; }
+    </style>
+</head>
+<body>
+
+<div id='map'>
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYW5keW5ndXllbjk1IiwiYSI6ImNqNmxxN2lyMTF2YmIyd3BtOXJwM3Y0bDgifQ.0cSfRUufu4N-uJ3CxWhBsw';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/andynguyen95/cj7fv6apm35io2rom87w9ctt7',
+    center: [151.199,-33.930],
+    zoom: 10.7,
+    pitch: 50,
+    bearing: 320
+});
+
+map.on('load', function() {
+
+    map.addLayer({ 
+        'id': 'room-extrusion',
+        'type': 'fill-extrusion',
+        'source': {
+            // Geojson Data source used in vector tiles, documented at
+            // https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
+            'type': 'geojson',
+            'data':  data
+        },
+        'paint': {
+            // See the Mapbox Style Spec for details on property functions
+            // https://www.mapbox.com/mapbox-gl-style-spec/#types-function
+            'fill-extrusion-color': {
+                // Get the fill-extrusion-color from the source 'color' property.
+                'property': 'chan2040',
+                "stops": [
+                    [-0.5, '#575c63'],
+                    [-0.13, '#999999'],
+                    [0, 'white'],
+                    [1, '#d8903e'],
+                    [7.3, '#e50909']
+                    ]
+            },
+            'fill-extrusion-height': {
+                // Get fill-extrusion-height from the source 'height' property.
+                'property': 'prop2040',
+                "stops": [
+                    [0.1, 0],
+                    [0.2, 100],
+                    [0.45, 1500],
+                    [0.7, 4000]
+                    ]
+                
+            },
+            'fill-extrusion-base': {
+                // Get fill-extrusion-base from the source 'base_height' property.
+                'property': 'base_height',
+                'type': 'identity'
+            },
+            // Make extrusions slightly opaque for see through indoor walls.
+            'fill-extrusion-opacity': 0.9
+        }
+    });
+});
+</script>
+
+<sidebar>
+    <h2>Age 20-40</h2>
+    <p>A much more interesting story emerges when we observe the proportion of 20-40 year olds living in an area.
+    <br><br>The city, inner-east, and inner-west, show high proportions of adults compared to the outer areas of Sydney.
+    <br><br>This may be contributed to a number of factors as these individuals move away from home to work and study near the CBD.
+    <br><br>Despite the density being so high, there has been little change in population as there is no space left to develop in the inner city.
+    </p><br><a href="Map2040.html" class="button">Prev</a>
+    <a href="Map4060.html" class="button">Next</a>
+</sidebar>
+
+</body>
+</html>
