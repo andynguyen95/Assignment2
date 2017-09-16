@@ -66,9 +66,9 @@ footer {
 }
 
 .para1 {
-	position: absolute;
+	position: relative;
 	left: 20%;
-	top: 20%;
+	top: 45%;
 	width: 60%;
 	text-align: left;
 	color: #1A4D51;
@@ -85,4 +85,17 @@ a.button {
 
     text-decoration: none;
     color: initial;
+}
+
+.backgroundimg {
+	background-image: url(https://danieltranphotography.com/wp-content/uploads/2016/12/Sydney-Skyline_Daniel-Tran.jpg);
+	height: 40%;
+	width: 100%;
+	left:0;
+	top:0;
+	position: absolute;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	z-index: -1;
 }
