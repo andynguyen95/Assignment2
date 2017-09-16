@@ -46,7 +46,7 @@ footer {
 }
 
 .topnav{
-	position:fixed;
+	float:right;
 	top:0;
 	left:0;
 	background-color: #2F4F4F  
